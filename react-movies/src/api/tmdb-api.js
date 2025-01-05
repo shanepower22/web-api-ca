@@ -51,22 +51,22 @@ export const getMovies = ( {queryKey}) => {
   };
 
   
-  export const getTopRatedMovies = ({queryKey}) => {
-    const {page} = queryKey[1];
-    return fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
-    ).then((response) => {
-      if (!response.ok) {
-        return response.json().then((error) => {
-          throw new Error(error.status_message || "Something went wrong");
-        });
-      }
-      return response.json();
-    })
-    .catch((error) => {
-        throw error
+  export const getTopRatedMovies = async ({ queryKey }) => {
+    const { page } = queryKey[1]; 
+
+    const response = await fetch(
+        `http://localhost:8080/api/movies/tmdb/toprated?page=${page}`, {
+        headers: {
+            'Authorization': window.localStorage.getItem('token')
+        }
     });
-  };
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch top-rated movies');
+    }
+
+    return response.json();
+};
   
   export const getTrendingMovies = ({ queryKey }) => {
     const [, timePart, pagePart] = queryKey;

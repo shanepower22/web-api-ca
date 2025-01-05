@@ -32,3 +32,16 @@ export const getGenres = async () => {
     }
 };
 
+export const getTopRatedMovies = async (page = 1) => {
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.TMDB_KEY}&language=en-US&page=${page}`
+        );
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
