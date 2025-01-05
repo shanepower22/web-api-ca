@@ -9,6 +9,7 @@ export const login = async (username, password) => {
   return response.json();
 };
 
+
 export const signup = async (username, password) => {
 const response = await fetch('http://localhost:8080/api/users?action=register', {
     headers: {
@@ -39,6 +40,18 @@ export const getMovies = async ({ queryKey }) => {
   return response.json();
 };
   
+export const getNowPlayingMovies = async () => {
+  const response = await fetch(
+    'http://localhost:8080/api/movies/tmdb/nowplaying', {
+    headers: {
+      'Authorization': window.localStorage.getItem('token')
+    }
+  }
+  )
+  return response.json();
+};
+
+
   export const getUpcomingMovies = async () => {
     const response = await fetch(
       'http://localhost:8080/api/movies/tmdb/upcoming', {
@@ -204,3 +217,4 @@ export const getTrendingMovies = async ({queryKey}) => {
       throw error
    });
   };
+
