@@ -10,7 +10,7 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
-import { getMovieCredits, getSimilarMovies } from "../../api/tmdb-api";
+import { getMovieCredits, getMovieProviders, getSimilarMovies } from "../../api/tmdb-api";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -44,8 +44,16 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
     getSimilarMovies
   );
 
+  const { data: providers, providerError, providerIsLoading, providerIsError } = useQuery(
+    ["provider", { id: movie.id }],
+    getMovieProviders
+  );
+
   const cast = credits?.cast || []; // prevent "credits is undefined" error
   const similarMovies = similar?.results || [];
+  const movieProviders = providers?.results || [];
+
+  const ieProviders = movieProviders['IE'];
     // console.log(credits);
   return (
     <>
@@ -96,6 +104,32 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
         ))}
       </Paper>
       
+      {ieProviders && (
+        <Paper component="ul" sx={root}>
+          <li>
+            <Chip label="Watch Providers" sx={chip} color="primary" />
+          </li>
+          {['flatrate', 'rent', 'buy'].map((type) => {
+            return ieProviders[type]?.map((provider) => (
+              <Chip
+                key={provider.provider_id}
+                avatar={
+                  provider.logo_path ? (
+                    <Avatar
+                      alt={provider.provider_name}
+                      src={`https://image.tmdb.org/t/p/w92${provider.logo_path}`}
+                    />
+                  ) : (
+                    <Avatar>{provider.provider_name[0]}</Avatar>
+                  )
+                }
+                label={provider.provider_name}
+                sx={chip}
+              />
+            ));
+          })}
+        </Paper>
+      )}
       <Typography variant="h5" component="h3" sx={{ marginTop: "20px" }}>
         Cast
       </Typography>
