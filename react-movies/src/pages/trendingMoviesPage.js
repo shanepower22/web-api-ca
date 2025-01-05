@@ -12,12 +12,15 @@ import {Box} from "@mui/material";
 import { AuthContext } from "../contexts/authContext";
 
 const TrendingMovies = (props) => {
-
+  
+  const context = useContext(AuthContext);
   const [page, setPage] = useState(1);
   const [time_window, setTimeWindow] = useState("day");
   const {  data, error, isLoading, isError }  = useQuery(
     ["trendingMovies", { time_window, page}], getTrendingMovies);
-    const context = useContext(AuthContext);
+
+  
+  
   
 
   if (isLoading) {
