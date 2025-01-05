@@ -11,7 +11,6 @@ router.get('/', async (req, res) => {
     res.status(200).json(users);
 });
 
-//.... code as before
 
 // register(Create)/Authenticate User
 router.post('/', asyncHandler(async (req, res) => {

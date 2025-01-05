@@ -46,7 +46,7 @@ router.get('/tmdb/nowplaying', asyncHandler(async (req, res) => {
 }));
 
 router.get('/tmdb/trending', asyncHandler(async (req, res) => {
-    const { page = 1, time_window } = req.query; 
+    const { page = 1, time_window = 'day' } = req.query; 
     const trendingMovies = await getTrendingMovies(page, time_window);
     res.status(200).json(trendingMovies);
 }));

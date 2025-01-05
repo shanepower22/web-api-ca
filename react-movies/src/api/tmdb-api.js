@@ -81,25 +81,29 @@ export const getNowPlayingMovies = async () => {
     return response.json();
 };
   
-export const getTrendingMovies = async ({queryKey}) => {
-  const { page, time_window } = queryKey[1];
-  try {
-      const response = await fetch(
-          `https://api.themoviedb.org/3/trending/movie/${time_window}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
-      );
-      if (!response.ok) {
-          throw new Error(response.json().message);
+
+
+export const getTrendingMovies = async ({ queryKey }) => {
+  const { page } = queryKey[1]; 
+  const { time_window } = queryKey[1]; 
+
+  const response = await fetch(
+    `http://localhost:8080/api/movies/tmdb/trending?page=${page}&time_window=${time_window}`, {
+      headers: {
+        'Authorization': window.localStorage.getItem('token')
       }
-      return await response.json();
-  } catch (error) {
-      throw error;
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch trending movies');
   }
+
+  return response.json();
 };
-
-
   
   export const getMovie = async (args) => {
-    //console.log(args)
+    
     const [, idPart] = args.queryKey;
     const { id } = idPart;
     return fetch(

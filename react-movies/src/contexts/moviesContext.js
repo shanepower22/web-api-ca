@@ -17,12 +17,9 @@ const MoviesContextProvider = (props) => {
     setFavorites(newFavorites)
   };
   
-  console.log(mustWatchMovies)
-
   const addReview = (movie, review) => {
     setMyReviews( {...myReviews, [movie.id]: review } )
   };
-  //console.log(myReviews);
 
   const addToMustWatch = (movie) => {
     let newMustWatch = [];
@@ -43,7 +40,6 @@ const MoviesContextProvider = (props) => {
     ) )
   };
 
-  // We will use this function in the next step
   const removeFromFavorites = (movie) => {
     setFavorites( favorites.filter(
       (mId) => mId !== movie.id
