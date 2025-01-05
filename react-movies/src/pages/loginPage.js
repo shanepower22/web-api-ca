@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../contexts/authContext';
 import { Link } from "react-router-dom";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
 const LoginPage = () => {
     const context = useContext(AuthContext);
@@ -23,21 +24,52 @@ const LoginPage = () => {
     }
 
     return (
-        <>
-            <h2>Login page</h2>
-            <p>You must log in to view the protected pages </p>
-            <input id="username" placeholder="user name" onChange={e => {
-                setUserName(e.target.value);
-            }}></input><br />
-            <input id="password" type="password" placeholder="password" onChange={e => {
-                setPassword(e.target.value);
-            }}></input><br />
-            {/* Login web form  */}
-            <button onClick={login}>Log in</button>
-            <p>Not Registered?
-                <Link to="/register">Sign Up!</Link></p>
-        </>
-    );
-};
+        <Container maxWidth="xs" sx={{ padding: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography variant="h4" >
+            Login
+          </Typography>
+          
+    
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+    
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ marginTop: 2 }}
+            onClick={login}
+          >
+            Log In
+          </Button>
+    
+          <Box sx={{ marginTop: 2 }}>
+            <Typography variant="body2" color="textSecondary">
+              Not Registered? 
+              <Link to="/register" >
+                <Button color="primary" sx={{ padding: 0 }}>
+                  Sign Up!
+                </Button>
+              </Link>
+            </Typography>
+          </Box>
+        </Container>
+      );
+    };
 
 export default LoginPage;
