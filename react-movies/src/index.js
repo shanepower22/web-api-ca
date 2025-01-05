@@ -16,6 +16,7 @@ import TopRatedMovies from "./pages/topRatedMoviesPage";
 import TrendingMovies from "./pages/trendingMoviesPage";
 import LoginPage from "./pages/loginPage";
 import AuthContextProvider from "./contexts/authContext";
+import SignUpPage from "./pages/signUpPage";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -45,6 +46,7 @@ const App = () => {
             <Route path="/movies/toprated" element={<TopRatedMovies/>} />
             <Route path="/movies/trending" element={<TrendingMovies/>} />
             <Route path="/login" element={<LoginPage/>} />
+            <Route path="/register" element={<SignUpPage/>} />
           </Routes>
           
         </MoviesContextProvider>
