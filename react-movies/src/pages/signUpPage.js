@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from '../contexts/authContext';
 
 const SignUpPage = () => {
@@ -39,7 +39,10 @@ const SignUpPage = () => {
       }}></input><br />
       {/* Login web form  */}
       <button onClick={register}>Register</button>
+      <p>Already a user? 
+                      <Link to="/login">Log in</Link></p>
     </>
+    
   );
 };
 

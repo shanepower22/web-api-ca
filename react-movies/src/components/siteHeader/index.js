@@ -32,9 +32,11 @@ const SiteHeader = ({ history }) => {
     { label: "Must Watch List", path: "/movies/mustwatch" },
     { label: "Top Rated", path: "/movies/toprated"},
     { label: "Trending", path: "/movies/trending"},
-    { label: "Login", path: "/login"},
-    { label: "Register", path: "/register"}
+    
   ];
+  const handleSignOut = () => {
+    context.signout();  
+  };
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
@@ -56,7 +58,7 @@ const SiteHeader = ({ history }) => {
               <Typography variant="body1" sx={{ color: "white" }}>
                 Welcome, {context.userName}!
               </Typography>
-              <Button color="inherit" >
+              <Button color="inherit" onClick={handleSignOut} >
                 Sign out
               </Button>
             </div>
