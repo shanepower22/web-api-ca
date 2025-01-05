@@ -13,6 +13,8 @@ export const getMovies = async (page = 1, sortOption = 'popularity.desc') => {
         throw error;
     }
 };
+
+
 export const getUpcomingMovies = async () => {
     try {
         const response = await fetch(
@@ -59,11 +61,27 @@ export const getTopRatedMovies = async (page = 1) => {
     }
 };
 
-export const getTrendingMovies = async ({queryKey}) => {
-    const [, { time_window }, { page }] = queryKey;
+export const getTrendingMovies = async (page = 1, time_window) => {
+
     try {
         const response = await fetch(
             `https://api.themoviedb.org/3/trending/movie/${time_window}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
+        );
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getMovie = async ({ id }) => {
+ 
+
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_API_KEY}`
         );
         if (!response.ok) {
             throw new Error(response.json().message);

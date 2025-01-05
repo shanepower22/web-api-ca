@@ -68,26 +68,24 @@ export const getMovies = async ({ queryKey }) => {
     return response.json();
 };
   
-  export const getTrendingMovies = ({ queryKey }) => {
-    const [, timePart, pagePart] = queryKey;
-    const { time_window } = timePart;
-    const { page} = pagePart
-    return fetch(
-      `https://api.themoviedb.org/3/trending/movie/${time_window}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
-    ).then( (response) => {
+export const getTrendingMovies = async ({queryKey}) => {
+  const { page, time_window } = queryKey[1];
+  try {
+      const response = await fetch(
+          `https://api.themoviedb.org/3/trending/movie/${time_window}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=${page}`
+      );
       if (!response.ok) {
-        return response.json().then((error) => {
-          throw new Error(error.status_message || "Something went wrong");
-        });
+          throw new Error(response.json().message);
       }
-      return response.json();
-    })
-    .catch((error) => {
-      throw error
-   });
-  };
+      return await response.json();
+  } catch (error) {
+      throw error;
+  }
+};
+
+
   
-  export const getMovie = (args) => {
+  export const getMovie = async (args) => {
     //console.log(args)
     const [, idPart] = args.queryKey;
     const { id } = idPart;

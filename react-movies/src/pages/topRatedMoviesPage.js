@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import { getTopRatedMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
@@ -6,7 +6,10 @@ import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import { Pagination } from "@mui/material";
 import {Box} from "@mui/material";
+import { AuthContext } from "../contexts/authContext";
+
 const TopRatedMovies = (props) => {
+  const context = useContext(AuthContext);
 
   const [page, setPage] = useState(1);
   const {  data, error, isLoading, isError }  = useQuery(['toprated', {page}], getTopRatedMovies);
@@ -33,9 +36,17 @@ const TopRatedMovies = (props) => {
     <PageTemplate
       title="Top Rated Movies"
       movies={movies}
-      action={(movie) => {
-        return <AddToFavoritesIcon movie={movie} />
-      }}
+      action={(movie) => (
+        <>
+          {context.isAuthenticated && (
+            <>
+              <AddToFavoritesIcon movie={movie} />
+              
+            </>
+          )}
+        </>
+      )}
+    
     />
     <Box
     sx={{
