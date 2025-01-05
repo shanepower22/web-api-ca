@@ -14,8 +14,8 @@ const TrendingMovies = (props) => {
 
   const [page, setPage] = useState(1);
   const [time_window, setTimeWindow] = useState("day");
-  const {  data, error, isLoading, isError }  = useQuery
-    (["trendingMovies", { time_window }, {page}], getTrendingMovies)
+  const {  data, error, isLoading, isError }  = useQuery(
+    ["trendingMovies", { time_window }, {page}], getTrendingMovies);
   
 
   if (isLoading) {

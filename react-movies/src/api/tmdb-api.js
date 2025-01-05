@@ -20,24 +20,24 @@ const response = await fetch('http://localhost:8080/api/users?action=register', 
 return response.json();
 };
 
-export const getMovies = ( {queryKey}) => {
-  const {page} = queryKey[1]; // directly access int, avoid Object object error
-  const { sortOption } = queryKey[1];
-  console.log(sortOption);
-  return fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&sort_by=${sortOption}&language=en-US&include_adult=false&include_video=false&page=${page}`
-    ).then((response) => {
-      if (!response.ok) {
-        return response.json().then((error) => {
-          throw new Error(error.status_message || "Something went wrong");
-        });
+export const getMovies = async ({ queryKey }) => {
+  const { page } = queryKey[1]; 
+  const { sortOption } = queryKey[1]; 
+
+  const response = await fetch(
+    `http://localhost:8080/api/movies/tmdb/discover?page=${page}&sortOption=${sortOption}`, {
+      headers: {
+        'Authorization': window.localStorage.getItem('token')
       }
-      return response.json();
-    })
-    .catch((error) => {
-        throw error
-    });
-  };
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch movies');
+  }
+
+  return response.json();
+};
   
   export const getUpcomingMovies = async () => {
     const response = await fetch(
